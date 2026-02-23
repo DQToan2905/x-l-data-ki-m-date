@@ -38,7 +38,7 @@ COLUMNS_KEEP = [
 
 def process_dataframe(df: pl.DataFrame) -> pl.DataFrame:
 
-
+```
 df = df.with_columns([
     pl.col('Hình ảnh_1').str.replace_all('^(.*)$', '"$1"')
 ])
@@ -64,7 +64,7 @@ df = df.filter(pl.col('Điều kiện lọc') > 0)
 df = df.select(COLUMNS_KEEP)
 
 return df
-
+```
 
 # =============================
 
@@ -74,7 +74,7 @@ return df
 
 def concat_excel_sheets(file_bytes, file_name):
 
-
+```
 def get_sheet_names(excel_io):
     wb = load_workbook(excel_io, read_only=True)
     return wb.sheetnames
@@ -109,7 +109,7 @@ with ThreadPoolExecutor(max_workers=max_workers) as executor:
 result = pl.concat(dfs, how="diagonal_relaxed")
 
 return result
-
+```
 
 # =============================
 
@@ -119,7 +119,7 @@ return result
 
 def read_excel_files(uploaded_files):
 
-
+```
 all_dfs = []
 
 for file in uploaded_files:
@@ -134,7 +134,8 @@ if not all_dfs:
 
 final = pl.concat(all_dfs, how="diagonal_relaxed")
 
-return
+return final
+```
 
 # =============================
 
@@ -150,7 +151,7 @@ accept_multiple_files=True
 
 if uploaded_files:
 
-
+```
 st.success(f"Đã upload {len(uploaded_files)} file")
 
 if st.button("🚀 Xử lý dữ liệu"):
@@ -185,5 +186,4 @@ if st.button("🚀 Xử lý dữ liệu"):
             file_name="data_kiem_date.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
-
-
+```
