@@ -152,38 +152,38 @@ accept_multiple_files=True
 # khởi tạo session state
 
 if "output_excel" not in st.session_state:
-st.session_state.output_excel = None
+    st.session_state.output_excel = None
 
 if uploaded_files:
 
-```
-st.success(f"Đã upload {len(uploaded_files)} file")
 
-if st.button("🚀 Xử lý dữ liệu"):
+    st.success(f"Đã upload {len(uploaded_files)} file")
+    
+    if st.button("🚀 Xử lý dữ liệu"):
+    
+        with st.spinner("Đang xử lý..."):
+    
+            data_date = read_excel_files(uploaded_files)
+    
+            if data_date is None:
+                st.error("Không đọc được dữ liệu")
+                st.stop()
+    
+            output = BytesIO()
+    
+            data_date.to_pandas().to_excel(
+                output,
+                index=False,
+                engine="xlsxwriter"
+            )
+    
+            output.seek(0)
+    
+            # lưu file vào session để download nhiều lần
+            st.session_state.output_excel = output.getvalue()
+    
+            st.success("✅ Hoàn thành!")
 
-    with st.spinner("Đang xử lý..."):
-
-        data_date = read_excel_files(uploaded_files)
-
-        if data_date is None:
-            st.error("Không đọc được dữ liệu")
-            st.stop()
-
-        output = BytesIO()
-
-        data_date.to_pandas().to_excel(
-            output,
-            index=False,
-            engine="xlsxwriter"
-        )
-
-        output.seek(0)
-
-        # lưu file vào session để download nhiều lần
-        st.session_state.output_excel = output.getvalue()
-
-        st.success("✅ Hoàn thành!")
-```
 
 # =============================
 
@@ -193,14 +193,15 @@ if st.button("🚀 Xử lý dữ liệu"):
 
 if st.session_state.output_excel is not None:
 
-```
-st.download_button(
-    label="📥 Download file Excel",
-    data=st.session_state.output_excel,
-    file_name="data_kiem_date.xlsx",
-    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-)
-```
+
+    st.download_button(
+        label="📥 Download file Excel",
+        data=st.session_state.output_excel,
+        file_name="data_kiem_date.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+
 
 
 
