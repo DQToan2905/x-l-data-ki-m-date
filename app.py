@@ -149,7 +149,7 @@ type=["xlsx", "xls"],
 accept_multiple_files=True
 )
 
-# nơi lưu file kết quả
+# khởi tạo session state
 
 if "output_excel" not in st.session_state:
 st.session_state.output_excel = None
@@ -179,7 +179,7 @@ if st.button("🚀 Xử lý dữ liệu"):
 
         output.seek(0)
 
-        # lưu vào session
+        # lưu file vào session để download nhiều lần
         st.session_state.output_excel = output.getvalue()
 
         st.success("✅ Hoàn thành!")
@@ -187,7 +187,7 @@ if st.button("🚀 Xử lý dữ liệu"):
 
 # =============================
 
-# DOWNLOAD BUTTON (không biến mất)
+# DOWNLOAD BUTTON
 
 # =============================
 
@@ -201,6 +201,7 @@ st.download_button(
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 )
 ```
+
 
 
 
