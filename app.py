@@ -164,10 +164,6 @@ if st.button("🚀 Xử lý dữ liệu"):
             st.error("Không đọc được dữ liệu")
             st.stop()
 
-        # =============================
-        # EXPORT EXCEL
-        # =============================
-
         output = BytesIO()
 
         data_date.to_pandas().to_excel(
